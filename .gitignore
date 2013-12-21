@@ -1,0 +1,7 @@
+*.pyc
+*.egg-info
+*.vim
+*.so
+*.orig
+.DS_Store
+build
