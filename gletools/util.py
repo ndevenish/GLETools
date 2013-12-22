@@ -4,7 +4,7 @@
     :copyright: 2009 by Florian Boesch <pyalot@gmail.com>.
     :license: GNU AGPL v3 or later, see LICENSE for more details.
 """
-from __future__ import with_statement
+
 from ctypes import byref, c_uint
 
 from gletools.gl import *
@@ -61,7 +61,7 @@ class Context(object):
 class Group(object):
     def __init__(self, *members, **named_members):
         self.__dict__.update(named_members)
-        self._members = list(members) + named_members.values()
+        self._members = list(members) + list(named_members.values())
     
     def __enter__(self):
         for member in self._members:

@@ -5,7 +5,7 @@
     :license: GNU AGPL v3 or later, see LICENSE for more details.
 """
 
-from __future__ import with_statement
+
 
 from ctypes import byref
 

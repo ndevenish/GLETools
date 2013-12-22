@@ -5,7 +5,7 @@
     :license: GNU AGPL v3 or later, see LICENSE for more details.
 """
 
-from __future__ import with_statement
+
 
 from gletools.gl import *
 from .util import Context, DependencyException, Group, gen_buffers, enabled, get
@@ -89,7 +89,7 @@ class VertexObject(object):
             None, index_pointer, GL_UNSIGNED_INT, c_uint, indices
         )]
         
-        for format, data in buffers.items():
+        for format, data in list(buffers.items()):
             format = format.split('_')
             if len(format) == 3:
                 mode_storage, mode_use, format = format
@@ -167,7 +167,7 @@ class VBO(object):
             self.indices = None
 
         self.buffers = []
-        for attrib, data in attribs.items():
+        for attrib, data in list(attribs.items()):
             name, size = attrib.split('_')
             size = int(size)
             self.buffers.append(Buffer4(

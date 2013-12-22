@@ -5,7 +5,7 @@
     :license: GNU AGPL v3 or later, see LICENSE for more details.
 """
 
-from __future__ import with_statement
+
 
 from gletools.gl import *
 from .util import Context, DependencyException, quad, ExtensionMissing
@@ -194,9 +194,9 @@ class Texture(Context):
         data = image.tostring()
         
         if spec.type == cls.gl_float:
-            data = map(lambda x: ord(x)/255.0, data)
+            data = [ord(x)/255.0 for x in data]
         else:
-            data = map(ord, data)
+            data = list(map(ord, data))
         
         return cls(width, height, format=format, filter=filter, unit=unit, data=data, mipmap=mipmap)
 
@@ -308,7 +308,8 @@ class Texture(Context):
         self.get_data(self.buffer)
         glFinish()
 
-    def __getitem__(self, (x, y)):
+    def __getitem__(self, x_y_tuple):
+        (x, y) = x_y_tuple
         x, y = x%self.width, y%self.height
 
         channels = self.spec.channels.count
@@ -319,7 +320,8 @@ class Texture(Context):
             end = pos + channels
             return self.buffer[pos:end]
 
-    def __setitem__(self, (x, y), value):
+    def __setitem__(self, x_y_tuple, value):
+        (x, y) = x_y_tuple
         x, y = x%self.width, y%self.height
 
         channels = self.spec.channels.count

@@ -1,6 +1,6 @@
 from math import sin, cos, tan, pi
 tau = 2*pi #http://tauday.com/ ffs
-from shader import Variable
+from .shader import Variable
 
 from pyglet.gl import *
 from pyglet.gl.glext_arb import *

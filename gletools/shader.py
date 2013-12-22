@@ -5,7 +5,7 @@
     :license: GNU AGPL v3 or later, see LICENSE for more details.
 """
 
-from __future__ import with_statement
+
 
 from ctypes import c_char_p, pointer, cast, byref, c_char, create_string_buffer, c_float, c_int, POINTER
 
@@ -56,7 +56,7 @@ class Shader(GLObject):
     
     @classmethod
     def open(cls, file):
-        if isinstance(file, basestring):
+        if isinstance(file, str):
             file = open(file)
         source = file.read()
         return cls(source, file.name)
@@ -231,7 +231,7 @@ class ShaderProgram(GLObject, Context):
         self.link()
 
         self.vars = Vars(self)
-        for name, value in variables.items():
+        for name, value in list(variables.items()):
             setattr(self.vars, name, value)
 
     def attrib_location(self, name):
@@ -348,7 +348,7 @@ class ShaderProgram(GLObject, Context):
         shaders = []
        
         try:
-            for typename, stage in stages.items():
+            for typename, stage in list(stages.items()):
                 if version:
                     source = '%s\n' % version
                 else:
@@ -368,10 +368,10 @@ class ShaderProgram(GLObject, Context):
                 shader = types[typename]
                 shaders.append(shader(source, filename))
             return cls(*shaders, **variables)
-        except (cls.Compile, cls.Link, cls.Validate), error:
+        except (cls.Compile, cls.Link, cls.Validate) as error:
             matcher = re.compile('(\d+)\((\d+)\) : (.+)')
             errors = []
-            mapping = dict((n, filename) for filename, n in mapping.items())
+            mapping = dict((n, filename) for filename, n in list(mapping.items()))
             for line in error.args[0].strip().split('\n'):
                 match = matcher.search(line)
                 if match:
